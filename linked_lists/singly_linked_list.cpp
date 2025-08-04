@@ -93,6 +93,39 @@ public:
         temp -> next = nn;
     }
 
+    
+    void delete_node(int target) {
+        if (first == nullptr) {
+            cout << "Linked list does not exist!" << endl;
+            return;
+        }
+
+        // Case 1: Delete first node
+        if (first->data == target) {
+            node* to_delete = first;
+            first = first->next;
+            delete to_delete;
+            return;
+        }
+
+        // Case 2: Find node before target
+        node* temp = first;
+        while (temp->next != nullptr && temp->next->data != target) {
+            temp = temp->next;
+        }
+
+        if (temp->next == nullptr) {
+            cout << "Target not found!" << endl;
+            return;
+        }
+
+        // Case 3: Found node to delete
+        node* to_delete = temp->next;
+        temp->next = to_delete->next;
+        delete to_delete;
+    }
+
+
     void print(string message="") {
         if (first == nullptr) {
             cout << "Linked List is empty!" << endl;
@@ -122,5 +155,7 @@ int main() {
     sll.print("Insert At Between (value=40) at (target=20): ");
     sll.insert_at_position(17, 3);
     sll.print("Insert At Position (3) (value=17): ");
+    sll.delete_node(10);
+    sll.print("Deleting node with value (10): ");
     return 0;
 }

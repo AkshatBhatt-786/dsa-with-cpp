@@ -75,6 +75,9 @@ int main() {
 
     cout << "Top element: " << st.peek() << endl;
     st.pop();
+    st.pop();
+    st.pop();
+    st.pop();
     st.display();
 
     cout << "Is Empty? " << (st.is_empty() ? "Yes" : "No") << endl;

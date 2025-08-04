@@ -75,6 +75,44 @@ public:
         }
     }
 
+    void delete_node(int target) {
+        if (first == nullptr) {
+            cout << "Linked list does not exist!" << endl;
+            return;
+        }
+
+        // Case 1: Delete first node
+        if (first->data == target) {
+            node* to_delete = first;
+            first = first->next;
+            if (first != nullptr) {
+                first->prev = nullptr;
+            }
+            delete to_delete;
+            return;
+        }
+
+        // Case 2: Traverse to the node to delete
+        node* temp = first->next;
+        while (temp != nullptr && temp->data != target) {
+            temp = temp->next;
+        }
+
+        if (temp == nullptr) {
+            cout << "Node with value " << target << " not found!" << endl;
+            return;
+        }
+
+        // Case 3: Found the node in middle or end
+        temp->prev->next = temp->next;
+        if (temp->next != nullptr) {
+            temp->next->prev = temp->prev;
+        }
+
+        delete temp;
+    }
+
+
     void print() {
         node* temp = first;
         while(temp != nullptr) {
@@ -94,5 +132,8 @@ int main() {
     dll.insert_at_end(4);
     dll.insert_at_end(2);
     dll.insert_before(3, 2);
+    dll.delete_node(8);
+    dll.print();
+    dll.delete_node(3);
     dll.print();   
 }

@@ -108,7 +108,7 @@ int calculate(string s) {
 }
 
 int main() {
-    string s1 = "1+(10-1)";
+    string s1 = "1+(10-1)-2";
     cout << calculate(s1) << endl;
     return 0;
 }

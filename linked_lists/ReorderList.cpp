@@ -2,14 +2,14 @@
 using namespace std;
 
 /*
-    🔹 Problem: Reorder List
+    Problem: Reorder List
     Given a singly linked list, reorder it as:
     L0 → Ln → L1 → Ln-1 → L2 → Ln-2 → ...
 
-    📥 Input: 1 → 2 → 3 → 4 → 5
-    📤 Output: 1 → 5 → 2 → 4 → 3
+    Input: 1 → 2 → 3 → 4 → 5
+    Output: 1 → 5 → 2 → 4 → 3
 
-    🧠 Approach:
+    Approach:
     1. Find middle node (slow/fast pointer)
     2. Reverse the second half
     3. Merge both halves alternately

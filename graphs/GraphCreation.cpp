@@ -1,15 +1,17 @@
 #include <iostream>
 #include <unordered_map>
 #include <list>
+
 using namespace std;
 
+template <typename T>
 class graph
 {
     public:
 
-        unordered_map< int, list<int> > adj;
+        unordered_map< T, list<T> > adj;
 
-        void addEdge(int u, int v, bool direction) 
+        void addEdge(T u, T v, bool direction) 
         {
             // direction = 0 -> unidrectional
             // direction = 1 -> directed graph
@@ -47,7 +49,7 @@ int main()
     cout << "Enter number of edges: ";
     cin >> m;
 
-    graph g;
+    graph<int> g;
 
     for (int i=0; i<m; i++)
     {

@@ -62,8 +62,10 @@ int main() {
     }
 
     g.printAdjList();
-
-    vector<int> bfs = g.performBfs(0, n);
+    int start;
+    cout << "Enter start node: ";
+    cin >> start; 
+    vector<int> bfs = g.performBfs(start, n);
     cout << "BFS Traversal: ";
     for (auto i : bfs) {
         cout << i << " ";

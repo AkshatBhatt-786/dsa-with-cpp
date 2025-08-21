@@ -5,7 +5,6 @@
 #include <queue>
 using namespace std;
 
-
 class Graph 
 {
 public:
@@ -28,8 +27,7 @@ public:
             {
                 performDFS(i, size);
             }
-        }
-        
+        }  
     }
 
     void performBFS(int startNode, int size)

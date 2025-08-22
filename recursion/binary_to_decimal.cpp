@@ -11,7 +11,7 @@ int binary_to_decimal(const string &bin, int index) {
 }
 
 int main() {
-    string binary = "0100";
+    string binary = "1001";
     cout << "Decimal: " << binary_to_decimal(binary, 0) << endl;
     return 0;
 }

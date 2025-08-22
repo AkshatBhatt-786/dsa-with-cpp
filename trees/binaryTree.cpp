@@ -17,6 +17,30 @@ public:
     }
 };
 
+void inorder(node* root) 
+{
+    if (root == NULL) return;
+    inorder(root -> left);
+    cout << root -> data << ", ";
+    inorder(root -> right);
+}
+
+void preorder(node* root) 
+{
+    if (root == NULL) return;
+    cout << root -> data << ", ";
+    preorder(root -> left);
+    preorder(root -> right);
+}
+
+void postorder(node* root)
+{
+    if(root == NULL) return;
+    postorder(root -> left);
+    postorder(root -> right);
+    cout << root -> data << ", ";
+}
+
 node* buildTree(node* root)
 {
     cout << "Enter the data: ";
@@ -74,5 +98,14 @@ int main()
 
     // level order traversal
     levelOrderTraversal(root);
+    cout << "Inorder Traversal : ";
+    inorder(root);
+    cout << endl;
+    cout << "Preorder Traversal : ";
+    preorder(root);
+    cout << endl;
+    cout << "Postorder Traversal : ";
+    postorder(root);
+    cout << endl;
     return 0;
 }

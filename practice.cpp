@@ -4,91 +4,41 @@
 #include <queue>
 using namespace std;
 
-class Graph 
+class node 
 {
 public:
-    unordered_map < int, list<int> > adjList;
+    int data;
+    node* left;
+    node* right;
 
-    void connectEdges(int u, int v)
+    node(int data)
     {
-        adjList[u].push_back(v);
-        adjList[v].push_back(u);
+        this->data = data;
+        left = nullptr;
+        right = nullptr;
     }
-
-    void dfs(vector<int> &visited, int startNode)
-    {
-        cout << startNode << ", ";
-        visited[startNode] = 1;
-
-        for(auto i: adjList[startNode])
-        {
-            if (visited[i] == 0) {
-                dfs(visited, i);
-            }
-        }
-    }
-
-    void bfs(int startNode, int size)
-    {
-        vector<int> visited(size, 0);
-        visited[startNode] = 1;
-        queue<int> q;
-        q.push(startNode);
-        
-        while(!q.empty())
-        {
-            int node = q.front();
-            q.pop();
-            cout << node << ", ";
-
-            for(auto i: adjList[node])
-            {
-                if(!visited[i]) {
-                    visited[i] = 1;
-                    q.push(i);
-                }
-            }
-        }
-
-    }
-
-    void print()
-    {
-        for (auto i : adjList)
-        {
-            cout << i.first << "-> ";
-            for(auto j : i.second)
-            {
-                cout << j << ", ";
-            }
-            cout << endl;
-        }
-    }
-
 };
 
-int main() 
+
+node* buildTree(node* root)
 {
-    int nodes, edges;
-    cout << "Enter the number of nodes and edges: ";
-    cin >> nodes >> edges;
-    Graph g;
-    vector<int> visited(nodes, 0);
+    int data;
+    cout << "Enter data: ";
+    cin >> data;
+    root = new node(data);
 
-    for(int i=0; i<edges; i++)
-    {
-        int u, v;
-        cout << "Enter the node you want to connect (seperate: ' ') : ";
-        cin >> u >> v;
-        g.connectEdges(u, v);
-    }
+    if (data == -1) return nullptr;
 
-    int startNode;
-    cout << "Enter the start node: ";
-    cin >> startNode;
-    g.print();
-    g.bfs(startNode, nodes);
-    cout << endl;
-    g.dfs(visited, startNode);
+    cout << "Enter data for left tree: " << root -> data << endl;
+    root -> left = buildTree(root -> left);
+    cout << "Enter data for right tree: " << root -> data << endl;
+    root -> right = buildTree(root -> right);
 
+    return root;
+}
+
+int main()
+{
+    node* root = NULL;
+    root = buildTree(root);
 }

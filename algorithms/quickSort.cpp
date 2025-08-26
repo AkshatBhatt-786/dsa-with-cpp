@@ -1,62 +1,55 @@
 #include <iostream>
 using namespace std;
 
-// 2 4 1 9 6
 int partition(int arr[], int s, int e)
 {
-    int pivot = arr[s]; // 2
+    int pivot = arr[s];
     int cnt = 0;
     for(int i=s+1; i<=e; i++)
-    {
-        if (arr[i] <= pivot) {
-            cnt++;
-        }
-    }
-    // place pivot at right place
-    int pivotIndex = s + cnt;
+         if(arr[i] <= pivot) cnt++;
+    
+    int pivotIndex = cnt + s;
     swap(arr[pivotIndex], arr[s]);
 
-    // left and right wala part smbhal lete hai
-    int i = s, j = e;
-    while(i<pivotIndex && j > pivotIndex)
+    int i=s, j=e;
+
+    while(i < pivotIndex && j > pivotIndex)
     {
-        while(arr[i] < pivot)
+        while(arr[i] < pivot) { 
             i++;
-
-        while(arr[j] > pivot)
+        }
+        while(arr[j] > pivot) { 
             j--;
-        
-        if (i < pivotIndex && j > pivotIndex) 
+        } 
+        if(i < pivotIndex && j > pivotIndex)
+        {
             swap(arr[i++], arr[j--]);
+        }
     }
-
-    return pivotIndex;
 }
 
-// 2 4 1 9 6
 void quickSort(int arr[], int s, int e)
 {
-    // base case
-    if (s >= e) 
+    if (s >= e)
         return;
-
-    // partition
+    
     int p = partition(arr, s, e);
 
-    // left part sort karo
+    // left part array
     quickSort(arr, s, p-1);
 
-    // right part sort karo
+    // right part array
     quickSort(arr, p+1, e);
 }
 
-int main() 
+int main()
 {
-    int arr[5] = {2, 4, 1, 9, 6};
     int n = 5;
+    int arr[5] = {3, 4, 5, 2, 1};
     quickSort(arr, 0, n-1);
-    for(int i=0; i<n; i++)
+
+    for (int i=0; i<n; i++) 
     {
         cout << arr[i] << ", ";
-    } cout << endl;
+    }
 }

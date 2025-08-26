@@ -75,10 +75,13 @@ void levelOrderTraversal(Node* root) {
 
 void inorder(Node* root)
 {
-    if (root == nullptr) return;
-    inorder(root->left);
+    if (root == nullptr) 
+    {
+        return;
+    }
+    inorder(root->left, count);
     cout << root->data << " ";
-    inorder(root->right);
+    inorder(root->right, count);
 }
 
 int main()
@@ -98,8 +101,10 @@ int main()
     }
 
     cout << "Inorder Traversal of BST (sorted): ";
-    inorder(root);
+    int count=0;
+    inorder(root, count);
     cout << endl << "Level Order Traversal : " << endl;
     levelOrderTraversal(root);
+    cout << count;
     return 0;
 }

@@ -1,4 +1,6 @@
 #include <iostream>
+#include <queue>
+
 using namespace std;
 
 class Node
@@ -16,7 +18,7 @@ public:
     }
 };
 
-// Insert into BST
+
 Node* insertIntoBST(Node* root, int data)
 {
     if (root == nullptr)
@@ -28,7 +30,7 @@ Node* insertIntoBST(Node* root, int data)
     {
         root->left = insertIntoBST(root->left, data);
     }
-    else
+    else if (data > root->data)
     {
         root->right = insertIntoBST(root->right, data);
     }
@@ -36,7 +38,41 @@ Node* insertIntoBST(Node* root, int data)
     return root;
 }
 
-// Inorder Traversal (should give sorted output for BST)
+void levelOrderTraversal(Node* root) {
+    queue<Node*> q;
+    int cnt = 0;
+    q.push(root);
+    q.push(NULL);
+
+    while(!q.empty())
+    {
+        Node* temp = q.front();
+        q.pop();
+
+        if (temp == NULL)
+        {
+            cnt+=1;
+            cout << endl;
+            if (!q.empty())
+            {
+                q.push(NULL);
+            }
+        } else 
+        {
+            cout << temp -> data << ", ";
+            if (temp -> left) 
+            {
+                q.push(temp -> left);
+            }
+            if (temp -> right)
+            {
+                q.push(temp -> right);
+            }
+        }
+    }
+    cout << "Height of Binary Tree : " << cnt;
+}
+
 void inorder(Node* root)
 {
     if (root == nullptr) return;
@@ -50,7 +86,7 @@ int main()
     Node* root = nullptr;
 
     int n;
-    cout << "Enter number of nodes: ";
+    cout << "Enter number of Nodes: ";
     cin >> n;
 
     cout << "Enter values: ";
@@ -63,7 +99,7 @@ int main()
 
     cout << "Inorder Traversal of BST (sorted): ";
     inorder(root);
-    cout << endl;
-
+    cout << endl << "Level Order Traversal : " << endl;
+    levelOrderTraversal(root);
     return 0;
 }

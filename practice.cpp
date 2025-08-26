@@ -1,44 +1,61 @@
 #include <iostream>
-#include <unordered_map>
-#include <list>
-#include <queue>
+#include <vector>
 using namespace std;
 
-class node 
+int partition(vector<int>& arr, int s, int e) 
 {
-public:
-    int data;
-    node* left;
-    node* right;
+    int pivot = arr[s];
+    int cnt = 0;
 
-    node(int data)
-    {
-        this->data = data;
-        left = nullptr;
-        right = nullptr;
+    for(int i=s+1; i<=e; i++) {
+        if (arr[i] <= pivot)
+            cnt++;
     }
-};
 
+    int pivotIndex = cnt + s;
+    swap(arr[pivotIndex], arr[s]);
 
-node* buildTree(node* root)
-{
-    int data;
-    cout << "Enter data: ";
-    cin >> data;
-    root = new node(data);
+    int i = s, j = e;
 
-    if (data == -1) return nullptr;
+    while(i < pivotIndex && j > pivotIndex) 
+    {
+        while(arr[i] <= pivot) i++;
+        while(arr[j] > pivot) j--;
 
-    cout << "Enter data for left tree: " << root -> data << endl;
-    root -> left = buildTree(root -> left);
-    cout << "Enter data for right tree: " << root -> data << endl;
-    root -> right = buildTree(root -> right);
+        if (i < pivotIndex && j > pivotIndex) 
+            swap(arr[i++], arr[j--]);
+    }
 
-    return root;
+    return pivotIndex;
 }
 
-int main()
+void quickSort(vector<int>& arr, int s, int e)
 {
-    node* root = NULL;
-    root = buildTree(root);
+    if (s >= e) return;
+
+    int p = partition(arr, s, e);
+
+    quickSort(arr, s, p-1);
+    quickSort(arr, p+1, e);
+}
+
+int main() 
+{
+    vector<int> arr;
+    int n;
+    cout << "Enter number of elements: ";
+    cin >> n;
+    
+    for(int i=0; i<n; i++) {
+        int temp;
+        cout << "Enter element " << i << ": ";
+        cin >> temp;
+        arr.push_back(temp);
+    }
+
+    quickSort(arr, 0, n-1);
+
+    cout << "Sorted array: ";
+    for (int i=0; i<n; i++) cout << arr[i] << " ";
+    cout << endl;
 }

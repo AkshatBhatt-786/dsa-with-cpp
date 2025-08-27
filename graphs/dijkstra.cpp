@@ -62,7 +62,6 @@ public:
                 } 
             }
         }
-
         return dist;
     }
 };
@@ -77,7 +76,7 @@ int main() {
         {2,3,5}
     };
     
-    int vertices = 4, e = 5, source = 0;
+    int vertices = 4, e = 5, source = 2;
 
     vector<int> dist = g.dijkstra(edges, vertices, e, source);
 

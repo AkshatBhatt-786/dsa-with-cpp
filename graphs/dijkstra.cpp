@@ -17,18 +17,26 @@ public:
         // build adjacency list
         for (int i=0; i<edges; i++) 
         {
-            int u = vec[i][0];
-            int v = vec[i][1];
-            int w = vec[i][2];
+            // [[source, destination, distance], [source, destination, distance]]
+            // [[0, 1, 4], [0, 2, 4], [1, 3, 4]]
+            // case i=0:
+            int u = vec[i][0]; // 0
+            int v = vec[i][1]; // 1
+            int w = vec[i][2]; // 4
 
+            // node: {destination, distance}
+            // 0 : {1, 4}
             adj[u].push_back(make_pair(v, w));
+
+            // 1 : {0, 4}
             adj[v].push_back(make_pair(u, w)); // undirected
         }
 
         // distance array with infinity
+        // [infinity, infinity, infinity, infinity]
         vector<int> dist(vertices, INT_MAX);
 
-        // set -> (distance, node)
+        // set -> pair(distance, node)
         set<pair<int, int>> st;
 
         // source init

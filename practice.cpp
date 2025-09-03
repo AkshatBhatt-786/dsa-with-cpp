@@ -1,45 +1,83 @@
 #include <iostream>
+#include <queue>
 using namespace std;
 
-int partition(int arr[], int s, int e)
+class TreeNode 
 {
-    int pivot = arr[s];
-    int cnt=0;
-    for(int i=s+1; i<=e; i++)
-        if (arr[i] < pivot) cnt++;
+    public:
+        int data;
+        TreeNode* left;
+        TreeNode* right;
     
-    int pivotIndex = cnt + s;
-    swap(arr[pivotIndex], arr[s]);
+        TreeNode(int data)
+        {
+            this->data = data;
+            left = nullptr;
+            right = nullptr;
+        }
+};
 
-    int i=s, j=e;
-    while(i < pivotIndex && j > pivotIndex)
+TreeNode* insertInBST(TreeNode* root, int data)
+{
+    // base condition
+    if (root == NULL)
     {
-        while (arr[i] < pivot) i++;
-        while (arr[j] > pivot) j--;
+        root = new TreeNode(data);
+        return root;
+    }
 
-        if (i < pivotIndex && j > pivotIndex) 
-            swap(arr[i++], arr[j--]);
+    if (data > root->data)
+        root->right= insertInBST(root->right, data);
+    else 
+        root->left = insertInBST(root->left, data);
+    
+    return root;
+}
+
+void levelOrderTraversal(TreeNode* root)
+{
+    queue<TreeNode*> q;
+    q.push(root);
+    q.push(NULL);
+
+    while(!q.empty())
+    {
+        TreeNode* temp = q.front();
+        q.pop();
+
+        if (temp == NULL)
+        {
+            cout << endl;
+            if(!q.empty())
+                q.push(NULL);
+        }
+        else
+        {
+            cout << temp->data << ", ";
+            if(temp->left)
+                q.push(temp->left);
+            if(temp->right)
+                q.push(temp->right);
+        }
     }
 }
 
-void applyQuickSort(int arr[], int s, int e)
+void takeInput(TreeNode* &root)
 {
-    if (s >= e)
-        return;
-
-    int p = partition(arr, s, e);
-
-    applyQuickSort(arr, s, p-1);    
-    applyQuickSort(arr, p+1, e);
+    int data;
+    cin >> data;
+    while(data != -1)
+    {
+        root = insertInBST(root, data);
+        cin >> data;
+    }
 }
 
 int main()
 {
-    int arr[5] = {4, 3, 5, 9, 1};
-    int n = 5;
-    applyQuickSort(arr, 0, n-1);
-    for (int i=0; i<n; i++)
-    {
-        cout << arr[i] << ", ";
-    }
+    TreeNode* root = NULL;
+    cout << "Enter data to create BST Tree" << endl;
+    takeInput(root);
+    levelOrderTraversal(root);
+    return 0;
 }

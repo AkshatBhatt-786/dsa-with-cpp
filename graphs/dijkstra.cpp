@@ -77,14 +77,14 @@ public:
 int main() {
     Graph g;
     vector<vector<int>> edges = {
-        {0,1,4},
-        {0,2,1},
-        {2,1,2},
-        {1,3,1},
+        {0,1,1},
+        {0,3,7},
+        {1,2,7},
+        {2, 4, 4},
         {2,3,5}
     };
     
-    int vertices = 4, e = 5, source = 2;
+    int vertices = 4, e = 5, source = 0;
 
     vector<int> dist = g.dijkstra(edges, vertices, e, source);
 

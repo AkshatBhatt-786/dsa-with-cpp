@@ -129,8 +129,8 @@ int main()
     node* root = NULL;
     // creating a tree
     // 1 3 7 -1 -1 11 -1 -1 5 17 -1 -1 -1
-    // root = buildTree(root);
-    root = buildTreeFromLevelOrderTraversal(root);
+    root = buildTree(root);
+    // root = buildTreeFromLevelOrderTraversal(root);
 
     // level order traversal
     levelOrderTraversal(root);

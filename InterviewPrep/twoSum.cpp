@@ -27,7 +27,7 @@ vector<int> twoSum(vector<int>& nums, int target) {
         hash[nums[i]] = i;
     }
     return {}; // no solution (though guaranteed in problem)
-}
+} 
 
 int main() {
     vector<int> nums = {2, 7, 11, 15};

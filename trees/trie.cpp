@@ -84,10 +84,41 @@ class Trie
             return searchWordUtil(root, word);
         }
 
+        bool deleteWordUtil(TrieNode* root, string word)
+        {
+            // * base condition
+            if (word.length() == 0)
+            {
+                root->isTerminal = false;
+                return true;
+            }
+
+            // ^ assumption: Words will be in CAPS
+            int index = word[0] - 'A';
+            TrieNode* child;
+
+            // ^ present case
+            if (root->children[index] != NULL)
+                child = root->children[index];
+            else
+                // ^ absent case
+                return false;
+            
+            // * recursion
+            return deleteWordUtil(child, word.substr(1));
+        }
+
+        bool deleteWord(string word)
+        {
+            return deleteWordUtil(root, word);
+        }
+
         void insertWord(string word)
         {
             insertUtil(root, word);
         }
+
+        
 };
 
 int main()
@@ -99,6 +130,8 @@ int main()
     t->insertWord("DICE");
 
     cout << "Present or Not: " << t->searchWord("TIME") << endl;
-    cout << "Present or Not: " << t->searchWord("TIM") << endl;
+    cout << "After deleteing Delete TIME word from Trie Tree";
+    t->deleteWord("TIME"); cout << endl;
+    cout << "Present or Not: " << t->searchWord("TIME") << endl;
     return 0;
 }

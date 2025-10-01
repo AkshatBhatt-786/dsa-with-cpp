@@ -22,7 +22,6 @@ public:
     }
 
     void insert_at_beginning(int value) {
-        
         // if linked list does not exists!
         if (first == nullptr) {
             node* first_node = new node(value);

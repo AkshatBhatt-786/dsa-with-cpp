@@ -1,70 +1,124 @@
 #include <iostream>
-#include <list>
-#include <vector>
 
 using namespace std;
 
-int hashFunction(int key, int tableSize)
-{
-    return key % tableSize;
-}
+// void merge(int arr[], int s, int e)
+// {
+//     int mid = (s+e)/2;
+//     int index1, index2, l1, l2, k;
+//     l1 = mid - s + 1;
+//     l2 = e - mid;
+//     int *first = new int[l1];
+//     int *second = new int[l2];
 
-bool searchElement(vector<list<int>> &hashTable, int data, int tableSize)
-{
-    int key = hashFunction(data, tableSize);
-    for(int search: hashTable[key])
-    {
-        if (search == data)
-            return true;
-    }
-    return false;
-}
+//     k=s;
+//     for(int i=0; i<l1; i++)
+//     {
+//         first[i] = arr[k++];
+//     }
 
-void insertElement(vector<list<int>> &hashTable, int data, int tableSize)
-{
-    int key = hashFunction(data, tableSize);
-    hashTable[key].push_back(data);
-}
+//     k=mid+1;
+//     for(int i=0; i<l2; i++)
+//     {
+//         second[i] = arr[k++];
+//     }
 
-bool deleteElement(vector<list<int>> &hashTable, int data, int tableSize)
-{
-    int key = hashFunction(data, tableSize);
-    int target = data;
-    for(int idx: hashTable[key])
-    {
-        if (idx == target)
-            hashTable[key].remove(target);
-            return true;
-    }
-    return false;
-}
+//     index1 = index2 = 0;
+//     k = s;
 
-void printElements(vector<list<int>> &hashTable, int tableSize)
+//     while(index1 < l1 && index2 < l2)
+//     {
+//         if(first[index1] < second[index2])
+//             arr[k++] = first[index1++];
+//         else
+//             arr[k++] = second[index2++];
+//     }
+
+//     while(index1 < l1)
+//         arr[k++] = first[index1++];
+    
+//     while(index2 < l2)
+//         arr[k++] = second[index2++];
+
+// }
+
+// void mergeSort(int arr[], int s, int e)
+// {
+//     // base condition
+//     if (s >= e) return;
+
+//     int mid = (s+e)/2;
+//     // left part
+//     merge(arr, s, mid);
+//     // right part
+//     merge(arr, mid+1, e);
+//     // merge left and right
+//     merge(arr, s, e);
+// }
+
+// int partition(int arr[], int s, int e)
+// {
+//     int pivot = arr[s];
+//     int cnt=0;
+//     for(int i=s+1; i<=e; i++)
+//     {
+//         if (arr[i] <= pivot)
+//             cnt ++;
+//     }
+//     int pivotIndex = cnt + s;
+//     swap(arr[pivotIndex], arr[s]);
+//     int i=s, j=e;
+//     while(i < pivotIndex && j > pivotIndex)
+//     {
+//         while(arr[i] <= pivot && i < pivotIndex) i++;
+//         while(arr[j] > pivot && j > pivotIndex) j--;
+
+//         if (i < pivotIndex && j > pivotIndex)
+//             swap(arr[i++], arr[j--]);
+//     }
+//     return pivotIndex;
+// }  
+
+// void quickSort(int arr[], int s, int e)
+// {
+//     // base condition
+//     if (s >= e)
+//         return;
+    
+//     int p = partition(arr, s, e);
+//     // sort for left array
+//     quickSort(arr, s, p-1);
+//     // sort for right array
+//     quickSort(arr, p+1, e);
+// }
+
+
+// void insertionSort(int arr[], int n) {
+//     int i = 1;
+//     while (i < n) {
+//         int key = arr[i];
+//         int j = i - 1;
+
+//         while (j >= 0 && arr[j] > key) {
+//             arr[j + 1] = arr[j];
+//             j--;
+//         }
+//         arr[j + 1] = key;
+//         i++;
+//     }
+// }
+
+class heap
 {
-    for(int i=0; i<tableSize; i++)
-    {
-        cout << "Bucket " << i << ": ";
-        for(int el : hashTable[i])
-        {
-            cout << el << " ";
-        }
-        cout << endl;
-    }
+    
 }
 
 int main()
 {
-    int tableSize = 7;
-    vector<list<int>> hashTable(tableSize);
-    insertElement(hashTable, 21, tableSize);
-    insertElement(hashTable, 12, tableSize);
-    insertElement(hashTable, 10, tableSize);
-    insertElement(hashTable, 9, tableSize);
-    insertElement(hashTable, 128, tableSize);
-    insertElement(hashTable, 242, tableSize);
-    printElements(hashTable, tableSize);
-    cout << "20 : " << (searchElement(hashTable, 20, tableSize) ? "present" : "not present") << endl;
-    cout << "242 : " << (searchElement(hashTable, 242, tableSize) ? "present" : "not present") << endl;
-    cout << "242 : " << (deleteElement(hashTable, 242, tableSize) ? "deleted successfully" : "not found.") << endl;
-    printElements(hashTable, tableSize);
+    int arr[5] = {3, 5, 2, 1, 12};
+    int n = 5;
+
+    insertionSort(arr , n);
+    for(int i=0; i<n; i++)
+        cout << arr[i] << " ";
 }

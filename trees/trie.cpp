@@ -14,7 +14,6 @@ class TrieNode
             this->data = data;
             for(int i=0; i<26; i++)
                 children[i] = NULL;
-            
             isTerminal = false;
         }
 };
@@ -53,9 +52,7 @@ class Trie
                 child = new TrieNode(word[0]);
                 root->children[index] = child;
             }
-
             insertUtil(child, word.substr(1));
-
         }
 
         bool searchWordUtil(TrieNode* root, string word)
@@ -116,9 +113,7 @@ class Trie
         void insertWord(string word)
         {
             insertUtil(root, word);
-        }
-
-        
+        }     
 };
 
 int main()

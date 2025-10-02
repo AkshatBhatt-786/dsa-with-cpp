@@ -66,15 +66,43 @@ public:
         }
     }
 
-
     void printHeapArray()
     {
         for(int i=1; i<=size; i++)
             cout << arr[i] << " | ";
         cout << endl;
     }
-
 };
+
+void heapify(int arr[], int n, int i)
+{
+    int largest = i;
+    int leftChildIndex = 2*i;
+    int rightChildIndex = 2*i+1;
+
+    if (leftChildIndex <= n && arr[largest] < arr[leftChildIndex])
+        largest = leftChildIndex;
+    if (rightChildIndex <= n && arr[largest] < arr[rightChildIndex])
+        largest = rightChildIndex;
+    if (largest != i)
+    {
+        swap(arr[i], arr[largest]);
+        heapify(arr, n, largest);
+    }
+}
+
+int heapSort(int arr[], int n)
+{
+    int size = n;
+
+    while(size > 1)
+    {
+        swap(arr[size], arr[1]);
+        size--;
+        heapify(arr, size, 1);
+    }
+
+}
 
 int main()
 {
@@ -90,11 +118,29 @@ int main()
     h.insert(402);
     h.insert(101);
     h.insert(67);
-    cout << "Heap Array: ";
-    cout << endl;
+    cout << "\narray 1: ";
     h.printHeapArray();
-    cout << "\nAfter deleting root node: ";
-    cout << endl;
-    h.deleteRootNode();
+
+    heap h2;
+    int arr[12] = {
+        -1, 70, 29, 30, 42, 86, 76, 52, 301, 402, 101, 67
+    };
+    int size = 11;
+    for (int i = size/2; i > 0; i--) {
+        heapify(arr, size, i);
+    }
+    cout << "\narray 2: ";
+    for (int i=1; i<size; i++)
+    {
+        cout << arr[i] << " | ";
+    }
+    cout << "\n\nAfter sorting: \n\narray[1]: ";
+    heapSort(h.arr, h.size);
     h.printHeapArray();
+    heapSort(arr, size);
+    cout << "\narray[2]: ";
+    for (int i=1; i<=size; i++)
+    {
+        cout << arr[i] << " | ";
+    }
 }

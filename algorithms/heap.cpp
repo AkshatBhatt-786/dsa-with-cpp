@@ -50,18 +50,18 @@ public:
         {
             int leftIndex = 2*i;
             int rightIndex = 2*i+1;
+            int largest = i;
 
-            if(leftIndex < size && arr[i] < arr[leftIndex])
-                {
-                    swap(arr[i], arr[leftIndex]); 
-                    i=leftIndex;
-                }
-            else if(rightIndex < size && arr[i] < arr[rightIndex])
-                {
-                    swap(arr[i], arr[rightIndex]); 
-                    i=rightIndex;
-                }
-            else
+            if(leftIndex < size && arr[largest] < arr[leftIndex])
+                largest = leftIndex;
+            if(rightIndex < size && arr[largest] < arr[rightIndex])
+                largest = rightIndex;
+            if(largest != i)
+            {
+                swap(arr[i], arr[largest]);
+                i = largest;
+            }
+            else    
                 return;
         }
     }

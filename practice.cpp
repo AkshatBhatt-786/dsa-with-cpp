@@ -1,146 +1,127 @@
 #include <iostream>
 using namespace std;
 
-class heap
+class TrieNode
 {
-public:
-    int arr[100];
-    int size;
+    public:
+        char data;
+        TrieNode* children[26];
+        bool isTerminal;
 
-    heap()
-    {
-        arr[0] = -1;
-        size = 0;
-    }
-
-    void insert(int val)
-    {
-        size = size + 1;
-        int index = size;
-
-        arr[index] = val;
-
-        while(index > 1)
+        TrieNode(char ch)
         {
-            int parent = index/2;
-            if (arr[parent] < arr[index])
-            {
-                swap(arr[parent], arr[index]);
-                index = parent;
-            } else return;
+            data = ch;
+            for(int i=0; i<26; i++)
+                children[i] = NULL;
+            isTerminal = false;
         }
-    }
-
-    void deleteRootNode()
-    {
-        if (size == 0)
-        {
-            cout << "nothing to delete....";
-            return;
-        }
-    
-        // Step 1: Move last element to root
-        arr[1] = arr[size];
-        size--;
-    
-        // Step 2: Heapify down
-        int i = 1;
-        while (i <= size)
-        {
-            int left = 2*i;
-            int right = 2*i+1;
-            int largest = i;
-        
-            if (left <= size && arr[left] > arr[largest])
-                largest = left;
-            if (right <= size && arr[right] > arr[largest])
-                largest = right;
-        
-            if (largest != i)
-            {
-                swap(arr[i], arr[largest]);
-                i = largest;
-            }
-            else
-                break;
-        }
-    }
-
-    void printHeapArray()
-    {
-        for(int i=1; i<=size; i++)
-            cout << arr[i] << " | ";
-        cout << endl;
-    }
 };
 
-void heapify(int arr[], int n, int i)
+class Trie
 {
-    int largest = i;
-    int leftChildIndex = 2*i;
-    int rightChildIndex = 2*i+1;
+    public:
+        TrieNode* root;
 
-    if (leftChildIndex <= n && arr[largest] < arr[leftChildIndex])
-        largest = leftChildIndex;
-    if (rightChildIndex <= n && arr[largest] < arr[rightChildIndex])
-        largest = rightChildIndex;
-    if (largest != i)
-    {
-        swap(arr[i], arr[largest]);
-        heapify(arr, n, largest);
-    }
-}
+        Trie()
+        {
+            root = new TrieNode('\0');
+        }
 
-int heapSort(int arr[], int n)
-{
-    int size = n;
+        void insertWordUtil(TrieNode* root, string word)
+        {
+            // base condition
+            if(word.length() == 0) {
+                root->isTerminal = true;
+                return;
+            }
 
-    while(size > 1)
-    {
-        swap(arr[size], arr[1]);
-        size--;
-        heapify(arr, size, 1);
-    }
+            // * getting index of character from 1-26 characters
+            // * assuming all characters are in CAPS.
+            int index = word[0] - 'A';
+            TrieNode* child;
 
-}
+            // * present case
+            if (root->children[index] != NULL) {
+                child = root->children[index];
+            } else {
+                // * absent case
+                child = new TrieNode(word[0]);
+                root->children[index] = child;
+            }
+            
+            insertWordUtil(child, word.substr(1));
+        }
+
+        void insertWord(string word)
+        {
+            insertWordUtil(root, word);
+        }
+
+        void deleteWord(string word)
+        {
+            bool search = searchWord(word);
+            if (search)
+            {
+                deleteWordUtil(root, word);
+                cout << "Word: " << word << " deleted from Trie Tree" << endl;
+            }
+            else 
+            {
+                cout << "Word: " << word << " not found in Trie Tree." << endl;
+            }
+        }
+
+        void deleteWordUtil(TrieNode* root, string word)
+        {
+            if (word.length() == 0 && root->isTerminal == true) {
+                root->isTerminal = false;
+                return;
+            }
+
+            if (word.length() == 0) return;
+
+            // * getting index of character from 1-26 characters
+            // * assuming all characters are in CAPS.
+            int index = word[0] - 'A';
+            TrieNode* child;
+
+            // * present case
+            if (root->children[index] != NULL) {
+                child = root->children[index];
+                deleteWordUtil(child, word.substr(1));
+            }
+        }
+
+        bool searchWordUtil(TrieNode* root, string word)
+        {
+            if (word.length() == 0)
+                return root->isTerminal;
+            
+            int index = word[0] - 'A';
+            TrieNode* child;
+
+            // * present case
+            if (root->children[index] != NULL)
+                child = root->children[index];
+            else return false;
+
+            return searchWordUtil(child, word.substr(1));
+        }
+
+        bool searchWord(string word)
+        {
+            return searchWordUtil(root, word);
+        }
+};
 
 int main()
 {
-    heap h;
-    h.insert(70);
-    h.insert(29);
-    h.insert(30);
-    h.insert(42);
-    h.insert(86);
-    h.insert(76);
-    h.insert(52);
-    h.insert(301);
-    h.insert(402);
-    h.insert(101);
-    h.insert(67);
-    cout << "\narray 1: ";
-    h.printHeapArray();
-
-    heap h2;
-    int arr[12] = {
-        -1, 70, 29, 30, 42, 86, 76, 52, 301, 402, 101, 67
-    };
-    int size = 11;
-    for (int i = size/2; i > 0; i--) {
-        heapify(arr, size, i);
-    }
-    cout << "\narray 2: ";
-    for (int i=1; i<size; i++)
-    {
-        cout << arr[i] << " | ";
-    }
-    cout << "\n\nAfter sorting: \n\narray[1]: ";
-    heapSort(h.arr, h.size);
-    h.printHeapArray();
-    heapSort(arr, size);
-    cout << "\narray[2]: ";
-    for (int i=1; i<=size; i++)
-    {
-        cout << arr[i] << " | ";
-    }
+    Trie *t = new Trie();
+    t->insertWord("AKSHAT");
+    t->deleteWord("AKSHAT");
+    t->insertWord("TIME");
+    cout << "AKSHAT present in Trie Tree: " << t->searchWord("AKSHAT") << endl;
+    cout << "TIME present in Trie Tree  : " << t->searchWord("TIME") << endl;
+    cout << "TIM present in Trie Tree : " << t->searchWord("TIM") << endl;
+    return 0; 
 }

@@ -1,4 +1,6 @@
+#define _WIN32_WINNT 0x600
 #include <iostream>
+#include "rang.hpp"
 using namespace std;
 
 class heap
@@ -46,15 +48,15 @@ public:
 
         // take root node to its correct position
         int i = 1;
-        while(i < size)
+        while(i <= size)
         {
             int leftIndex = 2*i;
             int rightIndex = 2*i+1;
             int largest = i;
 
-            if(leftIndex < size && arr[largest] < arr[leftIndex])
+            if(leftIndex <= size && arr[largest] < arr[leftIndex])
                 largest = leftIndex;
-            if(rightIndex < size && arr[largest] < arr[rightIndex])
+            if(rightIndex <= size && arr[largest] < arr[rightIndex])
                 largest = rightIndex;
             if(largest != i)
             {
@@ -69,7 +71,7 @@ public:
     void print()
     {
         for(int i=1; i<=size; i++)
-            cout << arr[i] << " ";
+            cout << rang::fg::red << rang::style::bold << arr[i] << rang::fg::cyan << " | " << rang::style::reset;
         cout << endl;
     }
 };
@@ -108,17 +110,22 @@ void heapSort(int arr[], int n)
 
 int main()
 {
-    int arr[6] = {-1, 54, 53, 55, 52, 50};
-    int n = 5;
-    for(int i=n/2; i>0; i--)
-    {
-        heapify(arr, n, i);
-    }
+    heap *h = new heap();
+    h->insert(5);
+    h->insert(2);
+    h->insert(35);
+    h->insert(9);
+    h->insert(3);
+    h->insert(52);
+    h->insert(0);
+    h->print();
 
-    heapSort(arr, n);
+    // // Test delete operation
+    // h->deleteFromHeap();
+    // cout << "After deleting root:" << endl;
+    // h->print();
 
-    for(int i=1; i<=n; i++)
-    {
-        cout << arr[i] << " ";
-    }
+    // // Pause for console window (Windows)
+    // system("pause");
+    return 0;
 }

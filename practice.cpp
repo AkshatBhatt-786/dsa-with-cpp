@@ -1,35 +1,74 @@
 #include <iostream>
-#include <queue>
-#include <stack>
 using namespace std;
 
-bool isPalidrome(string word) 
+class node
 {
-    stack<char> charStack;
-    queue<char> charQueue;
+    public:
+        int data;
+        node* prev;
+        node* next;
+    
+    node(int val) {
+        data = val;
+        prev = next = nullptr;
+    }
+};
 
-    //  ** Push all characters to both stack and queue
-    for (char c : word) {
-        // Optional: Convert to lowercase for case-insensitive comparison
-        // char lowerC = tolower(c);
-        charStack.push(c);
-        charQueue.push(c);
+class DoublyStack
+{
+public:
+    node* first;
+
+    DoublyStack() {
+        first = nullptr;
     }
 
-    // Compare characters from stack (reverse order) and queue (original order)
-    while (!charStack.empty() && !charQueue.empty()) {
-        if (charStack.top() != charQueue.front()) {
-            return false; // ^ Characters don't match - not a palindrome
+    void push(int val) {
+        node* nn = new node(val);
+        if (first == nullptr) {
+            first = nn;
+            return;
         }
-        charStack.pop();
-        charQueue.pop();
+        node* temp = first;
+        nn -> next = temp;
+        first = nn;
     }
 
-    return true;
-}
+    void pop() {
+        if (first == nullptr) {
+            cout << "nothing to pop....";
+            return;
+        }
+        node* temp = first;
+        first = temp -> next;
+        delete(temp);
+    }
 
-int main() {
-    cout << isPalidrome("bob");
-    cout << isPalidrome("akshat");
-    cout << isPalidrome("anna");
+    int top() {
+        return first->data;
+    }
+};
+
+int main()
+{
+    DoublyStack ds;
+    ds.push(10);
+    cout << "top : " << ds.top();
+    cout << endl;
+    ds.push(24);
+    cout << "top : " << ds.top();
+    cout << endl;
+    ds.push(25);
+    cout << "top : " << ds.top();
+    cout << endl;
+    ds.push(50);
+    cout << "top : " << ds.top();
+    cout << endl;
+    ds.pop();
+    cout << "top : " << ds.top();
+    cout << endl;
+    ds.pop();
+    cout << "top : " << ds.top();
+    cout << endl;
+
 }

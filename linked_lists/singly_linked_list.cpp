@@ -138,6 +138,21 @@ public:
         }
         cout << endl;
     }
+
+    bool hasCycle()
+    {
+        node* slow = first;
+        node* fast = first;
+
+        while(fast && fast -> next)
+        {
+            slow = slow -> next;
+            fast = fast -> next -> next;
+
+            if (slow == fast) return true;
+        }
+        return false;
+    }
 };
 
 int main() {
@@ -156,5 +171,6 @@ int main() {
     sll.print("Insert At Position (3) (value=17): ");
     sll.delete_node(10);
     sll.print("Deleting node with value (10): ");
+    cout << "has cycle: " << sll.hasCycle();
     return 0;
 }

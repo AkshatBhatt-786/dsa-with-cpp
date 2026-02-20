@@ -34,7 +34,7 @@ int firstUniqueChar(string s)
         }
     }
 
-    return -1; // no unique character
+    return -1; // * no unique character
 }
 
 int main()
